@@ -1,4 +1,4 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,40 +13,31 @@ public class AllocationBenchmarks
     const int Count = 1000;
 
     [Benchmark(OperationsPerInvoke = Count)]
-    public int AllocateObject()
+    public int UseObject()
     {
         var result = 0;
 
         for (int i = 0; i < Count; i++)
         {
-            var obj = new MyAdder(1, 2);
-            result = obj.Add();
+            var values = new Tuple<int, int>(1, 2);
+            result = values.Item1 + values.Item2;
         }
 
         return result;
-    }
-
-    class MyAdder(int a, int b)
-    {
-        public int Add() => a + b;
     }
 
     [Benchmark(OperationsPerInvoke = Count)]
-    public int UseStatic()
+    public int UseStruct()
     {
         var result = 0;
 
         for (int i = 0; i < Count; i++)
         {
-            result = MyStaticAdder.Add(1, 2);
+            var values = new ValueTuple<int, int>(1, 2);
+            result = values.Item1 + values.Item2;
         }
 
         return result;
-    }
-
-    static class MyStaticAdder
-    {
-        public static int Add(int a, int b) => a + b;
     }
 
     [Benchmark(OperationsPerInvoke = Count, Baseline = true)]

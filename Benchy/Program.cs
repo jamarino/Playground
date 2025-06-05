@@ -1,4 +1,4 @@
-﻿using BenchmarkDotNet.Running;
+using BenchmarkDotNet.Running;
 using Benchy;
 
 //BenchmarkRunner.Run<ListBenchmarks>();
@@ -6,4 +6,6 @@ using Benchy;
 //BenchmarkRunner.Run<AllocateManyBenchmarks>();
 //BenchmarkRunner.Run<IterationBenchmarks>();
 //BenchmarkRunner.Run<MemoryLocalityBenchmarks>();
-BenchmarkRunner.Run<ObjectSizeBenchmarks>();
+//BenchmarkRunner.Run<MultiDimentionalArrayBenchmarks>();
+//BenchmarkRunner.Run<ObjectSizeBenchmarks>();
+BenchmarkRunner.Run<SumBenchmarks>();

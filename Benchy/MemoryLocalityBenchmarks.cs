@@ -1,4 +1,4 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
 
 namespace Benchy;
 
@@ -15,7 +15,7 @@ public class MemoryLocalityBenchmarks
             {
                 for (int k = 0; k < Size; k++)
                 {
-                    matrix[i, j, k] = i + j + k; 
+                    matrix[i, j, k] = i + j + k;
                 }
             }
         }
@@ -25,40 +25,47 @@ public class MemoryLocalityBenchmarks
     private readonly int[,,] matrix;
 
     [Benchmark(Baseline = true)]
-    public int Correct()
+    public void Correct()
     {
-        int result = 0;
-
         for (int i = 0; i < Size; i++)
         {
             for (int j = 0; j < Size; j++)
             {
                 for (int k = 0; k < Size; k++)
                 {
-                    result = matrix[i, j, k]; 
+                    _ = matrix[i, j, k];
                 }
             }
         }
-
-        return result;
     }
 
     [Benchmark]
-    public int Incorrect()
+    public void HalfCorrect()
     {
-        int result = 0;
+        for (int j = 0; j < Size; j++)
+        {
+            for (int k = 0; k < Size; k++)
+            {
+                for (int i = 0; i < Size; i++)
+                {
+                    _ = matrix[i, j, k];
+                }
+            }
+        }
+    }
 
+    [Benchmark]
+    public void Incorrect()
+    {
         for (int k = 0; k < Size; k++)
         {
             for (int j = 0; j < Size; j++)
             {
                 for (int i = 0; i < Size; i++)
                 {
-                    result = matrix[i, j, k]; 
+                    _ = matrix[i, j, k];
                 }
             }
         }
-
-        return result;
     }
 }
